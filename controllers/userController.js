@@ -1,6 +1,6 @@
 const User = require("../model/User");
 const jwt = require('jsonwebtoken');
-
+const axios = require('axios');
 //handleerrors
 const handleErrors= (err) =>{
     console.log(err.message, err.code);
@@ -37,7 +37,7 @@ module.exports.signup_post = async(req, res) => {
     try{
         const user = await User.create({email, password, photo});
         const token = createToken(user._id);
-        res.cookie('jwt', token, {httpOnly:true,maxAge:maxAge * 1000})
+        //res.cookie('jwt', token, {httpOnly:true,maxAge:maxAge * 1000})
         res.status(201).json({user: user._id})
     }
     catch(err){
@@ -51,21 +51,19 @@ module.exports.logout_get = (req, res) => {
 }
 
 
-module.exports.login_get = (req, res) => {
-    res.send('login');
-}
-
 module.exports.login_post = async(req, res) => {
     const {email, password} = req.body;
     try{
         const user = await User.login(email,password);
         const token = createToken(user._id);
-        res.cookie('jwt', token, {httpOnly:true,maxAge:maxAge * 1000})
-        res.status(200).json({user:user._id});
+        //return ('jwt', token, {httpOnly:true,maxAge:maxAge * 1000})
+        res.status(200).json({user:user._id , token: token});
     }
     catch(err){
         const errors = handleErrors(err);
         res.status(400).json({errors});
     }
 }
+
+
 

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Point = require("./Point");
+const LocationSchema = require("./schema/Location")
+
 
 const PathSchema = mongoose.Schema({
     title: {
@@ -15,11 +16,9 @@ const PathSchema = mongoose.Schema({
     },
     points:[{type: mongoose.Schema.Types.ObjectId, ref: 'Point', required: true}]
     ,
-    collected:[{type: mongoose.Schema.Types.ObjectId, ref: 'Point', required: true}]
-    ,
     location: {
-        type: { type: String },
-        coordinates: [Number],
+        type: LocationSchema,
+        required: true
       },
     date :{
         type: String,
@@ -27,4 +26,5 @@ const PathSchema = mongoose.Schema({
     }
 })
 
+PathSchema.index({ location: "2dsphere" }); 
 module.exports = mongoose.model("Path",PathSchema);

@@ -1,45 +1,34 @@
 const mongoose = require("mongoose");
-const Question = require("./Question");
-
-const locationSchema = new mongoose.Schema({
-    type: {
-      type: String,
-      enum: ['Point'],
-      required: true
-    },
-    coordinates: {
-      type: [Number],
-      required: true
-    }
-  });
+const QuestionSchema = require("./schema/Question")
+const LocationSchema = require("./schema/Location")
 
 const PointSchema = mongoose.Schema({
-    // question: {
-    //     type: mongoose.Schema.Types.ObjectId, 
-    //     ref: 'Question',
-    //     required: true
-    // },
+    question: {
+        type: QuestionSchema,
+        required: true
+    },
     description:{
         type: String,
         required: true
     },
-    // photo:{
-    //     type: String
-    // },
+    photo:{
+        type: String
+    },
      location: {
-    type: locationSchema,
-    required: true
+        type: LocationSchema,
+        required: true
   },
     value:{
         type: Number,
-        required: true
+        required: true,
+        default: 1
     },
-    date :{
+    date :{//
         type: String,
         default: Date.now
     }
 })
 
 PointSchema.index({ location: "2dsphere" }); 
-//module.exports = mongoose.model("Location",Locationchema);
+
 module.exports = mongoose.model("Point",PointSchema);

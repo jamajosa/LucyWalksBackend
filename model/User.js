@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Path = require("./Path");
 const {isEmail} =require("validator");
 const bcrypt = require('bcrypt');
 const UserSchema = mongoose.Schema({
@@ -22,12 +21,11 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    points:{
-        type: Number,
-        default: 0
-    },
-    walked:[{type: mongoose.Schema.Types.ObjectId, ref: 'Path'}],
-    date :{
+    collectedPointsInPath:[{
+        path: {type: mongoose.Schema.Types.ObjectId, ref: 'Path', required: true},
+        point:[{type: mongoose.Schema.Types.ObjectId, ref: 'Point', required: true}]
+    }],
+    userCreated :{
         type: String,
         default: Date.now
     }
