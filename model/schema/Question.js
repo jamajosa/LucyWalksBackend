@@ -8,14 +8,18 @@ const QuestionSchema = mongoose.Schema({
     photo:{
         type: String
     },
-    badAnswers: [{answer: String} ],
+    //minimaal 1 slecht antwoord
+    badAnswers: [{
+        type: String,
+        required:true}],
     goodAnswer:{
         type: String,
         required: true
     },
     value:{
         type: Number,
-        required: true
+        required: true,
+        default: 1
     },
     date :{
         type: String,
@@ -23,4 +27,4 @@ const QuestionSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("Question",QuestionSchema);
+module.exports = QuestionSchema;
