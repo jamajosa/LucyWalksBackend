@@ -1,3 +1,4 @@
+//routes
 const pathRoutes = require('./routes/path')
 const pointRoutes = require('./routes/point')
 const userRoutes = require('./routes/users')
@@ -54,6 +55,7 @@ app.use('/users',userRoutes);
 app.use('/paths', checkToken,  pathRoutes);
 app.use('/points',checkToken,  pointRoutes);
 //first route
+
 app.get('/',(req,res) =>{
     res.send("hello world :)")
 });
